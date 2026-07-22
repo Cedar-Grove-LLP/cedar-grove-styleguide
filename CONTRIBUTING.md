@@ -120,6 +120,17 @@ following theirs will bounce back for rework even if it works correctly.
    the component supports. `button.stories.tsx` shows the shape to follow — a `meta` object
    with `argTypes` and default `args`, one named story per state, plus "All variants"/
    "All sizes" overview stories for a fast visual diff.
+
+   **A recurring TypeScript trap when a story uses a custom `render` function** (needed for
+   any compound/composed component — Dialog, Select, Combobox, Chart, and others all do
+   this): if the component has a *required* prop (`ChartContainer`'s `config`, `Combobox`'s
+   `options`, `ToggleGroup`'s `type`), `StoryObj<typeof meta>` still requires `args` to
+   satisfy that prop even though `render()` ignores `args` entirely and builds the example
+   inline. `tsc` will fail with "Property 'x' is missing" until you add a minimal
+   `args: { requiredProp: someValidValue }` alongside `render` — the value never actually
+   gets used, it only needs to type-check. This has bitten three separate components already
+   (`toggle-group.stories.tsx`, `chart.stories.tsx`, `combobox.stories.tsx`); look there for
+   the fix in practice before re-deriving it.
 6. **Meet the "what done looks like for a component" checklist** in Storybook's Introduction
    page: semantic tokens only, keyboard-operable and screen-reader-labeled, a story for every
    meaningful state, WCAG 2.1 AA contrast at minimum.
