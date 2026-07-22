@@ -29,7 +29,7 @@ function SheetOverlay({
     <DialogPrimitive.Overlay
       data-slot="sheet-overlay"
       className={cn(
-        'fixed inset-0 z-[var(--z-modal)] bg-black/50',
+        'fixed inset-0 z-[var(--z-overlay)] bg-black/50',
         'duration-(--motion-duration-base)',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',

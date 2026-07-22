@@ -69,6 +69,38 @@ nothing on the screen is at a different level from anything else. Reserving shad
 elements that are genuinely temporary or above the base layer — dropdowns, popovers, modals —
 keeps it meaningful for the handful of places it actually matters.
 
+### Stacking order (z-index)
+
+Shadow says *this floats*; z-index decides *what floats over what* when two floating things
+overlap. Every overlay in this system pulls its `z-index` from one small, centralized scale
+in `tokens/core/z-index.json` — components never hand-pick a raw `z-50`, so the layering
+stays collision-free as the library grows. There are six tiers:
+
+| Tier (token) | Value | What sits here |
+| --- | --- | --- |
+| `--z-sticky` | 100 | In-page sticky UI — a sticky table header or toolbar. Deliberately far below every portalled overlay, so a modal covers it. |
+| `--z-overlay` | 1000 | The dimmed backdrop/scrim behind a modal. |
+| `--z-modal` | 1100 | The modal surface itself — Dialog, Sheet, Drawer. Sits just above its own scrim. |
+| `--z-popover` | 1200 | **Every interactive floating overlay** — Dropdown, Context menu, Menubar menu, Navigation menu, Select, Combobox, Popover. |
+| `--z-tooltip` | 1300 | Tooltips — above menus, because a tooltip can point at a menu item. |
+| `--z-toast` | 1400 | Toasts — top of everything, so a notification is never hidden behind an open dialog. |
+
+The one decision worth calling out is why **interactive overlays (`--z-popover`, 1200) sit
+*above* modals (`--z-modal`, 1100)**, rather than below them as a naïve "a menu is a small
+thing, a modal is a big thing" ordering would suggest. Radix renders every floating overlay
+into a portal at the end of `<body>`, and a Select, Dropdown, or Combobox is very often opened
+from *inside* a Dialog or Sheet — reassigning a matter's lead attorney from a dialog, say. If
+menus lived on a tier below the modal, that in-dialog menu would render *behind* the dialog
+and be impossible to use. Because the menu can always be triggered from within a modal, it
+must always be able to outrank one. (An earlier version of this scale had a separate
+`dropdown` tier below `modal` and hit exactly this bug; that tier was retired and its
+components folded into `popover`.) The `Dialog` component's Storybook page includes a "With a
+Select inside" story that exercises this directly.
+
+Like everything else in this system, the specific numbers are a starting point, not sacred —
+but the *ordering* (interactive overlays above modals, tooltips above those, toasts above all)
+is a deliberate, load-bearing decision, not an accident of authoring order.
+
 ## Motion
 
 `tokens/core/motion.json` defines two small scales: duration and easing.
