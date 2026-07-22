@@ -22,7 +22,7 @@ interface DatePickerProps {
 /**
  * A single-date picker: Popover + Calendar packaged as one ready-to-use component (see
  * date-picker.stories.tsx for the API this optimizes for). The trigger reads as a button
- * showing the selected date, formatted long-form (e.g. "April 3, 2026"), or `placeholder`
+ * showing the selected date, formatted long-form (e.g. "April 3rd, 2026"), or `placeholder`
  * when nothing is picked yet. Selection is controlled: pass `value` and `onValueChange`.
  * Reach for DateRangePicker instead when the value is a bounded span — a billing period, an
  * engagement term — rather than a single day.

@@ -23,13 +23,21 @@ import { cn } from '@/lib/utils'
  * this sequence — see the fallback logic in `ChartStyle` below — so a consumer who has
  * already done that verification for their own palette is never stuck with this one.
  */
+// These reference the always-present generated `:root` custom properties directly (the raw
+// --palette-* / --color-* vars emitted by Style Dictionary into src/styles/tokens/*.css),
+// NOT the Tailwind-namespaced --color-cedar-600 etc. that only exist via globals.css's
+// `@theme inline` block. The @theme-inline vars are tree-shaken unless a literal reference
+// survives for the build scanner to see, which made an all-`--color-*` list quietly
+// fragile: cedar/clay/neutral would silently drop out of :root under a refactor that built
+// these strings dynamically, while info/success/warning (real :root props) kept working.
+// Sourcing every entry from the always-present layer removes that asymmetry.
 const CHART_DEFAULT_COLORS = [
-  'var(--color-cedar-600)',
-  'var(--color-clay-600)',
+  'var(--palette-cedar-600)',
+  'var(--palette-clay-600)',
   'var(--color-info-600)',
   'var(--color-success-600)',
   'var(--color-warning-600)',
-  'var(--color-neutral-500)',
+  'var(--palette-neutral-500)',
 ] as const
 
 // Mirrors globals.css's class-based dark mode (`<html class="dark">`, see its

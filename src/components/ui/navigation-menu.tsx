@@ -107,7 +107,10 @@ function NavigationMenuLink({
       data-slot="navigation-menu-link"
       className={cn(
         navigationMenuTriggerStyle(),
-        'data-[active=true]:bg-accent data-[active=true]:text-accent-foreground',
+        // Radix emits the active link as data-active="" (empty string), so the selector
+        // must be attribute-presence (`data-[active]`), not a value match — data-[active=true]
+        // would never fire and the active nav item would never get its highlight.
+        'data-[active]:bg-accent data-[active]:text-accent-foreground',
         className,
       )}
       {...props}

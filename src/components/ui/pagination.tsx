@@ -53,6 +53,7 @@ function PaginationLink({ className, isActive, size = 'icon', ...props }: Pagina
 function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
+      aria-label="Go to previous page"
       size="md"
       className={cn('gap-1 px-2.5', className)}
       {...props}
@@ -66,6 +67,7 @@ function PaginationPrevious({ className, ...props }: React.ComponentProps<typeof
 function PaginationNext({ className, ...props }: React.ComponentProps<typeof PaginationLink>) {
   return (
     <PaginationLink
+      aria-label="Go to next page"
       size="md"
       className={cn('gap-1 px-2.5', className)}
       {...props}
