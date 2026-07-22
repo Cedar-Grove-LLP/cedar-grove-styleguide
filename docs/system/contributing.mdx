@@ -13,7 +13,7 @@ here to do the work.
 One framing note before you start: almost nothing in this system is locked in yet. Several
 foundational choices — the primary color, the type pairing — are documented as a firm
 recommendation with named alternatives, not a final ruling (see `docs/foundations/colors.mdx`
-for an example of the pattern: "Recommendation A" stated plainly, "Recommendation B" named as a
+for an example of the pattern: "Option A" stated plainly, "Option B" named as a
 real alternative, neither treated as sacred). If your contribution touches one of those open
 decisions, follow the same pattern: state what you're proposing and why, and name the
 alternative you considered, rather than treating either the old or new value as obviously
@@ -103,7 +103,7 @@ in full. Nearly every convention this system expects is visible in those two fil
 matching them is most of the review — a component that reinvents its own patterns instead of
 following theirs will bounce back for rework even if it works correctly.
 
-1. **Match the file shape.** A single default export of the primary component (plus any
+1. **Match the file shape.** A single named export of the primary component (plus any
    sub-components a compound pattern needs, the way `card.tsx` exports `Card`, `CardHeader`,
    `CardTitle`, etc.), a `data-slot="…"` attribute on the root element for stable
    styling/testing hooks, and variants expressed with `class-variance-authority` (`cva`) when

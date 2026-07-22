@@ -133,10 +133,19 @@
   --text-4xl: var(--font-size-4xl);
   --text-5xl: var(--font-size-5xl);
 
-  --font-weight-normal: var(--font-weight-regular);
-  --font-weight-medium: var(--font-weight-medium);
-  --font-weight-semibold: var(--font-weight-semibold);
-  --font-weight-bold: var(--font-weight-bold);
+  /* Font weights are intentionally NOT remapped here. The token scale
+     (tokens/core/typography.json: regular 400, medium 500, semibold 600, bold 700) is
+     identical to Tailwind v4 built-in font-weight defaults, and Tailwind generated
+     font-normal/font-medium/font-semibold/font-bold as font-weight: var(--font-weight-*),
+     which read the generated --font-weight-* tokens from tokens-core.css directly. A
+     remapping like --font-weight-medium: var(--font-weight-medium) would be a
+     self-referential declaration (same name on both sides), the exact self-loop the
+     --palette-* to --color-* split below is designed to avoid, so it is omitted.
+
+     Type sizes, line-heights, and letter-spacing above DO need remapping because their
+     Tailwind namespaces (--text-*, --leading-*, --tracking-*) differ from the generated
+     token names (--font-size-*, --font-line-height-*, --font-letter-spacing-*), so those
+     are genuine cross-name references, not self-loops. */
 
   --tracking-tight: var(--font-letter-spacing-tight);
   --tracking-normal: var(--font-letter-spacing-normal);

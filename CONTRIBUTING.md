@@ -7,8 +7,8 @@ covers the organizational model; this one covers what to actually type into a te
 One framing note before you start: almost nothing in this system is locked in yet. Several
 foundational choices — the primary color, the type pairing — are documented as a firm
 recommendation with named alternatives, not a final ruling (see
-`docs/foundations/colors.mdx` in Storybook for an example: "Recommendation A" stated plainly,
-"Recommendation B" named as a real alternative, neither treated as sacred). If your
+`docs/foundations/colors.mdx` in Storybook for an example: "Option A" stated plainly,
+"Option B" named as a real alternative, neither treated as sacred). If your
 contribution touches one of those open decisions, follow the same pattern in your PR
 description — state what you're proposing and why, and name the alternative you considered —
 rather than treating either the old or new value as obviously correct.
