@@ -28,6 +28,7 @@ const preview: Preview = {
             'UI Copy Patterns',
           ],
           'Governance',
+          'Contributing',
         ],
       },
     },
