@@ -1,0 +1,165 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Accessibility" />
+
+# Accessibility
+
+Unlike **Foundations → Colors**, this page is not an options menu. Color strategy is a
+genuine, undecided fork with real trade-offs on both sides; accessibility is not that kind
+of question. Every component in this system must meet **WCAG 2.1 Level AA**, full stop.
+There's no version of "recommendation vs. alternative" here worth presenting, because there
+is no credible argument for shipping a lower bar to real clients — some of whom will be
+using assistive technology, low-vision, colorblind, or simply tired and looking at a screen
+in bad light. That's not a hypothetical population; it's most people, some of the time.
+
+## The baseline: AA, not AAA, and not less
+
+WCAG 2.1 AA is the floor for every component in this library — not an aspiration to work
+toward, not a stretch goal, the actual minimum bar a component has to clear to be considered
+done (see **Foundations → Introduction**, "What done looks like for a component," point 4).
+
+It's worth explaining why the target is AA and not the stricter AAA level, since "more
+accessible" sounds like it should always be better. AAA's normal-text contrast requirement
+is 7:1, against AA's 4.5:1. In practice, 7:1 is genuinely hard to hit with any brand color
+that has real personality — pushed far enough to clear 7:1, most colorful brand identities
+get desaturated into near-grayscale, because chroma and contrast trade off against each
+other at a fixed lightness. Mandating AAA sitewide would mean either giving up Cedar
+Grove's actual brand color as a UI color entirely, or using it only in illustrative,
+non-text contexts. AA at 4.5:1 is the level where real brand personality and rigorous
+accessibility both fit in the same palette — which is the pragmatic reason nearly every
+mature design system (GOV.UK included) targets AA as its baseline and treats AAA as a
+bonus where it falls out naturally, not as the universal mandate.
+
+And in this system's case, hitting AA isn't a bare-minimum scrape. The primary color pairing
+— white text on `cedar-700` — measures **6.73:1**. AA's normal-text floor is 4.5:1; AAA's is
+7:1. At 6.73:1 this pairing is most of the way to AAA already, well clear of AA with real
+margin to spare. Meeting the AA baseline here didn't require trading away brand color for
+compliance — see **Foundations → Colors** for the full contrast breakdown behind that number.
+
+<div className="flex flex-wrap items-center gap-6 my-4">
+  <div className="text-center">
+    <div className="flex items-center justify-center size-20 rounded-md bg-cedar-700">
+      <span className="text-white text-sm font-medium">Aa</span>
+    </div>
+    <p className="text-xs mt-1 font-mono">6.73:1</p>
+    <p className="text-xs text-neutral-500">white on cedar-700</p>
+  </div>
+  <div className="text-sm text-neutral-600 max-w-xs">
+    AA normal text needs 4.5:1. AAA needs 7:1. This pairing sits close enough to AAA that
+    the brand color was never in tension with the accessibility bar.
+  </div>
+</div>
+
+## Contrast, concretely
+
+Every semantic color pairing this system ships — in both the light and dark theme — has
+been checked against measured contrast ratios, not eyeballed. These are the verified
+numbers for the pairings used most heavily across components:
+
+| Pairing | Ratio | Passes |
+| --- | --- | --- |
+| `primary-foreground` on `primary` (light) | 6.73:1 | AAA ✓ |
+| `foreground` on `background` (light) | 17.5:1 | AAA ✓ |
+| `muted-foreground` on `background` (light) | 5.17:1 | AA normal text ✓ |
+| `accent-foreground` on `accent` (light) | 10.2:1 | AAA ✓ |
+| `foreground` on `background` (dark) | 17.5:1 | AAA ✓ |
+
+A few things worth noting about that table. First, `muted-foreground` — the pairing used
+for secondary and de-emphasized text, the kind of text most likely to get pushed too light
+in the name of visual hierarchy — clears AA (4.5:1) with genuine margin at 5.17:1, not by a
+rounding error. Second, `foreground` on `background` measures identically at 17.5:1 in both
+light and dark theme; the dark theme isn't a lower-effort inversion, it's held to the same
+standard as light.
+
+One pairing deserves a specific callout: **warning uses dark text, not white, on its amber
+background.** `warning-foreground` resolves to `neutral-950` rather than `color.white` in
+both themes. This is deliberate, not an oversight — amber and yellow backgrounds are a
+notoriously common way to accidentally fail contrast, because white text on a mid-value
+amber routinely lands somewhere in the 2:1–3:1 range, well under the 4.5:1 floor, and it's
+an easy trap to fall into because white-on-color is the reflexive default for every other
+status role here (`destructive`, `success`, `info` all use white foregrounds because their
+backgrounds are dark enough to support it). Warning's background isn't dark enough for
+that pattern, so it breaks it on purpose:
+
+<div className="flex flex-wrap items-center gap-4 my-4">
+  <span className="inline-flex items-center rounded-md bg-warning px-3 py-1.5 text-sm font-medium text-warning-foreground">
+    Needs attention
+  </span>
+  <span className="text-xs text-neutral-500">warning-foreground (neutral-950) on warning</span>
+</div>
+
+If you're adding a new status color or a new tint of an existing one, don't assume white
+foreground is safe — check it, especially for anything in the yellow/amber/lime range.
+
+## Keyboard and focus
+
+Every interactive primitive in this library must be fully operable by keyboard alone: tab
+to it, activate it, escape or dismiss it, without ever touching a mouse or trackpad. For
+most of what's here, this falls out of building on [Radix
+primitives](https://www.radix-ui.com/primitives) rather than hand-rolled interactive
+markup — Radix's `Tabs` and `Select` implement roving `tabindex` so arrow keys move focus
+correctly within the group, and `Dialog` implements focus trapping (focus can't escape the
+dialog to the page behind it) plus Escape-to-close, out of the box.
+
+That inheritance is a head start, not a guarantee. It's still the contributor's job to
+verify keyboard behavior on every new component and every meaningful new state, never to
+assume "it's built on Radix, so it's fine." A composed pattern can still break keyboard
+flow in ways no primitive would catch on its own — a custom `onKeyDown` handler that
+swallows Tab, a focus target that isn't actually focusable, an icon-only button with no
+accessible name.
+
+The other half of keyboard support is making focus *visible*, not just present. Every
+focusable element in this system carries the shared focus ring pattern:
+
+```
+outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:border-ring
+```
+
+This appears verbatim across `Button`, `Input`, `Textarea`, `Checkbox`, `Switch`, `Select`,
+and `Badge`. The rule that matters more than the specific class names: **never remove a
+focus outline without putting an equally visible replacement in its place.** `outline-none`
+only appears in this codebase paired with a `focus-visible:ring-*` replacement on the same
+element — never on its own. A component with focus removed and nothing standing in for it
+is invisible to anyone tabbing through the page, which is a keyboard user's entire mental
+model of where they are.
+
+## Motion
+
+Motion has its own accessibility surface — vestibular disorders and motion sensitivity are
+real, common, and easy to trigger with careless animation. Rather than duplicate that
+guidance here, see **Foundations → Elevation & Motion** for the full reduced-motion
+approach (respecting `prefers-reduced-motion`, which transitions are safe to keep versus
+which need a reduced/no-motion fallback).
+
+## What to check before shipping a new component
+
+A practical checklist, not a formal audit — most of this takes a few minutes per
+component, and skipping it is how regressions get shipped instead of caught:
+
+1. **Keyboard-only walkthrough.** Unplug the mouse, mentally or literally. Tab to the
+   component, through every interactive state, and back out. Confirm you can reach it,
+   operate it, and leave it — including closing anything modal — without a pointer.
+2. **Screen reader smoke test.** Run it once with VoiceOver (macOS) or NVDA (Windows).
+   You're listening for whether the component's name, role, and state are announced
+   sensibly — not doing a full audit, just catching the "this button has no accessible
+   name" class of bug before it ships.
+3. **Contrast check for any new color pairing.** If a component introduces a color
+   combination not already in the tables on this page or in **Foundations → Colors**,
+   measure it and record the ratio. Don't assume a pairing is fine because it "looks dark
+   enough" — the warning-color case above is exactly the kind of pairing that looks fine
+   and isn't.
+4. **Storybook's a11y addon panel shows no violations.** This Storybook instance already
+   runs `axe-core` automatically against every story via the accessibility addon — open the
+   Accessibility panel for each new story and confirm it's clean before calling the
+   component done. A red violation here is the same severity as a failing test, not a
+   suggestion.
+
+None of these four replace each other — axe-core catches a wide class of programmatically
+detectable issues (missing labels, insufficient contrast, invalid ARIA) but it can't tell
+you whether tab order is sensible or whether a screen reader announcement actually makes
+sense out loud. All four are cheap enough to run on every new component that skipping one
+is rarely a real time save.
+
+For accessibility on the content and writing side — alt text, link text that makes sense
+out of context, heading structure — see **Brand & Content → Accessibility & Inclusive
+Writing** rather than this page.

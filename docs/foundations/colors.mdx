@@ -1,0 +1,263 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Color is the one part of this system with a genuine, undecided fork in it, and this page is
+written that way on purpose. Everything below is an **options menu, not a mandate** — three
+real strategies for how Cedar Grove's brand color shows up across a full product suite, each
+with a name, a rationale, real swatches, and real contrast numbers. One of them is what's
+actually implemented in `tokens/` today. None of them is final. Following [IBM Carbon's lead](
+https://carbondesignsystem.com/) — a mature system that documents several supported patterns
+for a given problem rather than a single mandate — is the right mental model here: read this
+as a menu to choose from with real stakeholder input, not a decision that's already been made
+for you.
+
+## Where these numbers came from
+
+Every value in `tokens/core/color.json` traces back to one real source: Cedar Grove's actual
+logo, sampled directly off the live site. The mark is an ivory/cream background
+(`#ecede7`) with a muted olive/moss ink (`#585947`) — HSL roughly 64°, 11%, 31%. That's a
+**very desaturated** color. It is not the bright, saturated "cedar tree" green a name like
+"Cedar Grove" might suggest, and getting that distinction right mattered more than almost
+anything else in this palette. This system's `cedar-700` token (`#5c5d4b`) is, to within
+rounding, that exact logo ink. Nothing in the ramp below was invented — the 50–950 steps are
+extrapolated lighter and darker from that one anchored point, the same way you'd build out a
+type scale from a single base size.
+
+<div className="flex flex-wrap gap-3 my-4">
+  <div className="text-center">
+    <div className="size-16 rounded-md border border-neutral-300" style={{ backgroundColor: '#ecede7' }} />
+    <p className="text-xs mt-1 font-mono">#ecede7</p>
+    <p className="text-xs text-neutral-500">logo ivory</p>
+  </div>
+  <div className="text-center">
+    <div className="size-16 rounded-md" style={{ backgroundColor: '#585947' }} />
+    <p className="text-xs mt-1 font-mono">#585947</p>
+    <p className="text-xs text-neutral-500">logo ink (sampled)</p>
+  </div>
+  <div className="text-center">
+    <div className="size-16 rounded-md bg-cedar-700" />
+    <p className="text-xs mt-1 font-mono">#5c5d4b</p>
+    <p className="text-xs text-neutral-500">cedar-700 (token)</p>
+  </div>
+</div>
+
+Because the live Squarespace site is intentionally minimal — a tagline, a nav shell, and that
+logo, with no large body of existing marketing copy or UI to mine — this palette had to extend
+what's real rather than match a big existing pattern library. That's the brief for every
+option below: extend the real ink color's register, don't contradict it.
+
+## Three strategies for using it
+
+The question these three options answer is: **once you have one quiet, desaturated brand
+color, how far across the product does it spread?** All three keep `cedar-700` as the
+anchor value. They disagree about how much of the interface is allowed to be that color.
+
+### Option A — Heritage *(current working default)*
+
+Cedar — the real olive/moss, as the full `50`–`950` ramp anchored on the actual logo ink —
+**is** the primary action color everywhere: buttons, links, and focus rings all reference
+`cedar-700` (or `cedar-600` for rings) directly, system-wide, client portal and internal
+tools alike.
+
+<div className="flex flex-wrap items-center gap-4 my-4">
+  <button className="px-4 py-2 rounded-md bg-cedar-700 text-white text-sm font-medium">Primary button</button>
+  <span className="text-sm underline text-cedar-700">A text link</span>
+  <div className="size-10 rounded-md bg-cedar-700 ring-2 ring-offset-2 ring-cedar-600" />
+</div>
+
+| Pairing | Contrast |
+| --- | --- |
+| White text on `cedar-700` (#5c5d4b) | **6.73:1** — passes AAA for normal text |
+| `cedar-700` on `neutral-50` (#fafaf9), as a link/text color | **6.44:1** |
+
+**Why recommend this as the default:** it's the highest-fidelity option — anyone who
+recognizes the Cedar Grove mark today recognizes it immediately in the product, in every
+button they click. And critically, there's no accessibility trade-off to accepting it:
+6.73:1 isn't scraping by at the AA floor of 4.5:1, it clears AAA (7:1 is the AAA threshold
+for normal text, and 6.73:1 sits right at that bar with room to spare at larger sizes).
+Recommending a brand color as primary usually means negotiating away contrast headroom;
+this one doesn't ask for that trade.
+
+### Option B — Ink-first, olive as accent
+
+Primary UI actions — buttons, links, focus rings — use a near-neutral warm charcoal
+(`neutral-900` or `neutral-950`) instead of cedar. Cedar is reserved strictly as an
+**accent**: header/nav moments, tags, chart categories, marketing pages. It never appears
+as the default button color.
+
+<div className="flex flex-wrap items-center gap-4 my-4">
+  <button className="px-4 py-2 rounded-md bg-neutral-900 text-white text-sm font-medium">Primary button</button>
+  <button className="px-4 py-2 rounded-md bg-neutral-950 text-white text-sm font-medium">Primary (950 variant)</button>
+  <span className="px-2 py-1 rounded bg-cedar-100 text-cedar-800 text-xs font-medium">Accent tag</span>
+</div>
+
+| Pairing | Contrast |
+| --- | --- |
+| White text on `neutral-900` | **15.4:1** |
+| White text on `neutral-950` | **18.27:1** |
+
+Both numbers are stronger than Option A's 6.73:1 — this isn't a compromise on
+accessibility either, it's a different design bet. The case for it: Cedar Grove's actual
+product suite isn't only marketing pages — it includes a dense, data-heavy internal tool
+(the attorney-utilization and billing dashboard), and a muted olive repeated across dozens
+of buttons and links on a screen like that can start to read as flat and monotone at scale,
+because it's a low-saturation color to begin with. Reserving cedar as an accent means it
+only shows up where it's meant to draw the eye, which sharpens hierarchy and — somewhat
+counterintuitively — makes the brand color feel more distinctive, not less, because it
+stops being wallpaper. This is a genuinely common pattern in mature B2B products: plenty of
+serious design systems keep their brand hue quiet and reserve it for specific accent
+moments rather than painting it across every interactive control (without pointing at any
+one competitor's unpublished internal decisions, since that's not something to assert
+without a source).
+
+### Option C — Evolved / brightened
+
+Same hue family (~64°), but modestly more saturated than the literal logo extraction. The
+reasoning: a color calibrated for a small embossed or printed seal doesn't have to carry the
+same intensity when it's covering large UI surfaces on a backlit screen. A slightly richer
+version of the same hue can still read as unmistakably "the same color" — it's a values and
+chroma adjustment, not a hue shift — while feeling more alive in a browser than on a
+letterhead.
+
+<div className="flex flex-wrap gap-3 my-4">
+  <div className="text-center">
+    <div className="size-16 rounded-md bg-cedar-700" />
+    <p className="text-xs mt-1 font-mono">#5c5d4b</p>
+    <p className="text-xs text-neutral-500">as extracted (A / B)</p>
+  </div>
+  <div className="text-center">
+    <div className="size-16 rounded-md border border-neutral-300" style={{ backgroundColor: '#556b3f' }} />
+    <p className="text-xs mt-1 font-mono">#556b3f (illustrative)</p>
+    <p className="text-xs text-neutral-500">brightened direction</p>
+  </div>
+</div>
+
+This is the middle-ground pitch between fully preserving heritage (Option A) and meaningfully
+departing from cedar as the primary action color (Option B): it keeps cedar as the primary
+action color like Option A, but asks whether the exact extracted value is the right one to
+scale up, or just the right one to start from. No token values have been computed for this
+direction yet — it needs its own contrast pass and a decision on how much saturation increase
+is "more alive" versus "no longer the same color," and that work should happen only if this
+option is the one worth pursuing.
+
+## What's implemented today, and what changing it costs
+
+**Option A is the working default implemented in this repo right now.** Open
+`tokens/semantic/light.json` or `dark.json` and `primary` / `primary-foreground` resolve to
+`palette.cedar.700` / `color.white` (and `palette.cedar.400` / `palette.neutral.950` in dark
+mode). If you open Storybook today, every primary button, every link, every focus ring is
+cedar.
+
+Switching to Option B requires **no new tokens** — this is the actual point of having a
+semantic layer between raw palette and components. The only change needed is repointing two
+aliases:
+
+```
+// tokens/semantic/light.json
+"primary": { "$value": "{palette.cedar.700}" }   →   "{palette.neutral.900}"
+"ring":    { "$value": "{palette.cedar.600}" }    →   "{palette.neutral.800}" (or similar)
+
+// tokens/semantic/dark.json — mirrored
+"primary": { "$value": "{palette.cedar.400}" }    →   "{palette.neutral.50}" or an inverted equivalent
+```
+
+...then re-run `npm run tokens:build`. No component file changes — not one. Every button,
+link, and focus ring in `src/components/ui/` reads `bg-primary` / `text-primary-foreground`,
+never `bg-cedar-700` directly (see **Foundations → Introduction** on why semantic tokens
+exist at all). That's the whole point of this token layer: a strategy change is a two-line
+JSON edit and a rebuild, not a find-and-replace across the codebase.
+
+This choice is not final, and it should be made with real stakeholder input — not decided by
+default because it's what happened to get built first.
+
+## Clay: the secondary accent
+
+`tokens/core/color.json` also defines a `clay` ramp — a muted warm tan/terracotta, deliberately
+a different hue family from cedar (clay sits in warm orange/brown territory; cedar sits in
+olive/moss territory) so brand meaning and status meaning never collide, and so an accent used
+next to cedar reads as a *second* color, not a slightly-off version of the first.
+
+<div className="flex flex-wrap gap-2 my-4">
+  <div className="size-12 rounded-md bg-clay-100" />
+  <div className="size-12 rounded-md bg-clay-300" />
+  <div className="size-12 rounded-md bg-clay-500" />
+  <div className="size-12 rounded-md bg-clay-700" />
+  <div className="size-12 rounded-md bg-clay-900" />
+</div>
+
+| Pairing | Contrast |
+| --- | --- |
+| `clay-900` on `clay-100` (accent surface, e.g. a tag or callout) | **10.2:1** |
+
+Even a quiet, near-monochrome brand needs at least one secondary accent, and the reason is
+concrete rather than aesthetic: Cedar Grove's real analytics product (the attorney
+utilization / billing dashboard) renders Recharts and D3 charts, and charts need several
+genuinely distinguishable categorical colors to plot multiple series at once. A strictly
+monochrome palette — just cedar at different tints — can't support that; adjacent tints of
+the same low-saturation hue are exactly the kind of thing colorblind users and quick-glance
+scanning both struggle to tell apart. Clay exists to give charts, tags, and editorial accents
+somewhere to go that isn't "a lighter or darker cedar," without introducing a color that could
+be mistaken for a status signal.
+
+## Status colors are their own hue family, on purpose
+
+`success`, `warning`, `danger`, and `info` (also in `tokens/core/color.json`) are deliberately
+**not** derived from cedar or clay at all — they're independent hues (green, amber, red,
+blue) chosen so status meaning is never ambiguous with brand meaning. A cedar-colored badge
+should never make someone wonder for a half-second whether it means "this matter is fine" or
+"this is just how we brand things."
+
+<div className="flex flex-wrap gap-4 my-4">
+  <div className="text-center">
+    <div className="size-12 rounded-md" style={{ backgroundColor: '#207941' }} />
+    <p className="text-xs mt-1">success-700</p>
+  </div>
+  <div className="text-center">
+    <div className="size-12 rounded-md" style={{ backgroundColor: '#ae7b13' }} />
+    <p className="text-xs mt-1">warning-700</p>
+  </div>
+  <div className="text-center">
+    <div className="size-12 rounded-md" style={{ backgroundColor: '#ab2821' }} />
+    <p className="text-xs mt-1">danger-700</p>
+  </div>
+  <div className="text-center">
+    <div className="size-12 rounded-md" style={{ backgroundColor: '#255c93' }} />
+    <p className="text-xs mt-1">info-700</p>
+  </div>
+</div>
+
+These are consumed only through semantic aliases (`bg-destructive`, `bg-success`, and so on)
+— never exposed as raw utility classes the way `cedar-*` and `clay-*` are — because status
+color should always be a deliberate, named choice in a component, not something reached for
+because it happened to be the nearest swatch.
+
+## Other reference numbers for this palette
+
+A few more measured pairings worth having on hand when building or reviewing a component,
+independent of which primary-color option is chosen:
+
+| Pairing | Use case | Contrast |
+| --- | --- | --- |
+| `neutral-950` on `neutral-50` | Default body text | **17.5:1** |
+| `neutral-600` on `neutral-50` | Muted/secondary text | **5.17:1** |
+
+Both clear WCAG 2.1 AA (4.5:1 for normal text) with real margin — see **Foundations →
+Accessibility** for how contrast is verified across this palette more broadly, including the
+combinations not listed here.
+
+## Summary
+
+| | Option A — Heritage | Option B — Ink-first | Option C — Evolved |
+| --- | --- | --- | --- |
+| Primary action color | cedar-700 | neutral-900/950 | brightened cedar (TBD) |
+| Cedar's role | Primary, everywhere | Accent only | Primary, richer |
+| Brand recognition | Highest | Lower in dense UI, higher in accents | High |
+| Best fit | Marketing site, client-facing portal | Dense internal tools (dashboard) | Undecided — needs its own contrast pass |
+| Status in this repo | **Implemented today** | Not implemented — a 2-token swap | Not implemented — no values chosen |
+
+No option above is the ratified answer. This page exists so that decision can be made
+deliberately, with the real trade-offs on the table, rather than by default because Option A
+happened to ship first.
