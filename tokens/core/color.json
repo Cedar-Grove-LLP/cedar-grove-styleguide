@@ -45,7 +45,7 @@
     }
   },
   "color": {
-    "$description": "Status/utility colors, consumed only by alias (tokens/semantic/*.json) rather than exposed as direct utility classes — they never appear on the left-hand side of a @theme mapping, so no naming collision risk applies to this group.",
+    "$description": "Status/utility colors. Consumed mainly by alias (tokens/semantic/*.json → the destructive/success/warning/info semantic roles), and a few 600 steps are also referenced directly as raw --color-*-600 vars by the chart default palette (src/components/ui/chart.tsx). They never appear on the left-hand side of a @theme mapping, so no naming collision risk applies to this group.",
     "success": {
       "$description": "Status color: positive/complete states. Distinct hue from the cedar brand color so brand and status meaning never collide.",
       "100": { "$value": "#e7f8ed", "$type": "color" },

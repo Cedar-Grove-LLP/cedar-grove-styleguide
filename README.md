@@ -38,7 +38,7 @@ page — and it's the place to look when you want to see something rather than r
   [W3C Design Tokens Community Group](https://www.designtokens.org/) format and compiled to
   CSS custom properties by [Style Dictionary](https://styledictionary.com/).
 - **Storybook** (Vite builder), with the accessibility (`a11y`), `addon-docs`,
-  `addon-themes`, and `storybook-design-token` addons.
+  `addon-themes`, `addon-links`, and `storybook-design-token` addons.
 
 None of this is a new direction for the firm. Cedar Grove's own production analytics app
 (`cedar-grove-analytics`) already runs React 19, Tailwind v4, and Lucide icons — this system

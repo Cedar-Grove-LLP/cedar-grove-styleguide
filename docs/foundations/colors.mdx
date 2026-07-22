@@ -70,14 +70,15 @@ tools alike.
 
 | Pairing | Contrast |
 | --- | --- |
-| White text on `cedar-700` (#5c5d4b) | **6.73:1** — passes AAA for normal text |
+| White text on `cedar-700` (#5c5d4b) | **6.73:1** — passes AA for normal text (just under the 7:1 AAA threshold) |
 | `cedar-700` on `neutral-50` (#fafaf9), as a link/text color | **6.44:1** |
 
 **Why recommend this as the default:** it's the highest-fidelity option — anyone who
 recognizes the Cedar Grove mark today recognizes it immediately in the product, in every
 button they click. And critically, there's no accessibility trade-off to accepting it:
-6.73:1 isn't scraping by at the AA floor of 4.5:1, it clears AAA (7:1 is the AAA threshold
-for normal text, and 6.73:1 sits right at that bar with room to spare at larger sizes).
+6.73:1 isn't scraping by at the AA floor of 4.5:1 — it sits well above AA and just short of
+the 7:1 AAA threshold for normal text (and clears AAA outright for large text, whose
+threshold is 4.5:1).
 Recommending a brand color as primary usually means negotiating away contrast headroom;
 this one doesn't ask for that trade.
 
@@ -166,7 +167,7 @@ aliases:
 
 ...then re-run `npm run tokens:build`. No component file changes — not one. Every button,
 link, and focus ring in `src/components/ui/` reads `bg-primary` / `text-primary-foreground`,
-never `bg-cedar-700` directly (see **Foundations → Introduction** on why semantic tokens
+never `bg-cedar-700` directly (see **Introduction** on why semantic tokens
 exist at all). That's the whole point of this token layer: a strategy change is a two-line
 JSON edit and a rebuild, not a find-and-replace across the codebase.
 

@@ -28,7 +28,7 @@ function SelectTrigger({
         'flex h-9 w-full items-center justify-between gap-2 rounded-md border border-input bg-transparent px-3 py-1 text-sm text-foreground shadow-sm transition-colors',
         'data-[placeholder]:text-muted-foreground',
         'outline-none focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:border-ring',
-        'disabled:cursor-not-allowed disabled:pointer-events-none disabled:opacity-50',
+        'disabled:pointer-events-none disabled:opacity-50',
         'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
         '[&>span]:line-clamp-1',
         className,
@@ -83,7 +83,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
   return (
     <SelectPrimitive.Label
       data-slot="select-label"
-      className={cn('px-2 py-1.5 text-xs text-muted-foreground', className)}
+      className={cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', className)}
       {...props}
     />
   )

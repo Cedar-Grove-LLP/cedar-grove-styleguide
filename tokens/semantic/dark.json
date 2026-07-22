@@ -24,5 +24,13 @@
   "info-foreground": { "$value": "{color.white}", "$type": "color" },
   "border": { "$value": "{palette.neutral.800}", "$type": "color" },
   "input": { "$value": "{palette.neutral.800}", "$type": "color" },
-  "ring": { "$value": "{palette.cedar.400}", "$type": "color" }
+  "ring": { "$value": "{palette.cedar.400}", "$type": "color" },
+  "sidebar": { "$value": "{palette.neutral.900}", "$type": "color" },
+  "sidebar-foreground": { "$value": "{palette.neutral.50}", "$type": "color" },
+  "sidebar-primary": { "$value": "{palette.cedar.400}", "$type": "color" },
+  "sidebar-primary-foreground": { "$value": "{palette.neutral.950}", "$type": "color" },
+  "sidebar-accent": { "$value": "{palette.neutral.800}", "$type": "color" },
+  "sidebar-accent-foreground": { "$value": "{palette.neutral.50}", "$type": "color" },
+  "sidebar-border": { "$value": "{palette.neutral.800}", "$type": "color" },
+  "sidebar-ring": { "$value": "{palette.cedar.400}", "$type": "color" }
 }

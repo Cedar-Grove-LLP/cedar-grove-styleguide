@@ -17,5 +17,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts", "style-dictionary.config.mjs"]
+  "include": ["vite.config.ts"]
 }

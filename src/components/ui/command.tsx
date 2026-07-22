@@ -31,7 +31,7 @@ function CommandInput({
         data-slot="command-input"
         className={cn(
           'flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground',
-          'disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+          'disabled:pointer-events-none disabled:opacity-50',
           className,
         )}
         {...props}

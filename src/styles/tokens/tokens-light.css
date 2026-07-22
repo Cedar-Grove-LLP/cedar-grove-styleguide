@@ -28,4 +28,12 @@
   --border: #e9eae6;
   --input: #e9eae6;
   --ring: #7d7f62;
+  --sidebar: #f5f6f4;
+  --sidebar-foreground: #151514;
+  --sidebar-primary: #5c5d4b;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e9eae6;
+  --sidebar-accent-foreground: #242523;
+  --sidebar-border: #e9eae6;
+  --sidebar-ring: #7d7f62;
 }

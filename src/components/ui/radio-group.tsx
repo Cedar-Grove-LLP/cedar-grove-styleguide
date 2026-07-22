@@ -26,7 +26,7 @@ function RadioGroupItem({
       className={cn(
         'aspect-square size-4 shrink-0 rounded-full border border-input shadow-sm outline-none transition-colors',
         'focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:border-ring',
-        'disabled:cursor-not-allowed disabled:opacity-50',
+        'disabled:pointer-events-none disabled:opacity-50',
         'data-[state=checked]:border-primary',
         'aria-invalid:ring-destructive/20 aria-invalid:border-destructive',
         className,
