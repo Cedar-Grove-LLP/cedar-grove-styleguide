@@ -210,3 +210,53 @@
     --tw-prose-td-borders: var(--border);
   }
 }
+
+/*
+ * Radix's Accordion/Collapsible measure the open content's real pixel height and expose it
+ * as --radix-accordion-content-height / --radix-collapsible-content-height, so the open/close
+ * motion has to be a real CSS @keyframes animation, not a `transition` on height: Radix's
+ * Presence helper (which decides when to unmount closed content) only listens for
+ * `animationend`/`animationcancel`, not `transitionend` — a plain transition would report "no
+ * animation" and the content would vanish instantly on close instead of collapsing smoothly.
+ *
+ * @keyframes are global by nature regardless of which file defines them, so they live here
+ * with every other shared style rather than in a per-component CSS file — accordion.tsx and
+ * collapsible.tsx reference these by name via Tailwind's arbitrary animate-[…] value, with
+ * duration/easing coming from the shared motion tokens (tokens/core/motion.json) via var(),
+ * matching dialog.tsx's use of the same tokens for its own open/close animation.
+ */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes collapsible-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-collapsible-content-height);
+  }
+}
+
+@keyframes collapsible-up {
+  from {
+    height: var(--radix-collapsible-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
