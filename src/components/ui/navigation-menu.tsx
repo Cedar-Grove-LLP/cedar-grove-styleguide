@@ -123,7 +123,7 @@ function NavigationMenuViewport({
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) {
   return (
-    <div className="absolute top-full left-0 z-[var(--z-dropdown)] flex w-full justify-center">
+    <div className="absolute top-full left-0 z-[var(--z-popover)] flex w-full justify-center">
       <NavigationMenuPrimitive.Viewport
         data-slot="navigation-menu-viewport"
         className={cn(
@@ -144,7 +144,7 @@ function NavigationMenuIndicator({
     <NavigationMenuPrimitive.Indicator
       data-slot="navigation-menu-indicator"
       className={cn(
-        'top-full z-[var(--z-dropdown)] flex h-1.5 items-end justify-center overflow-hidden',
+        'top-full z-[var(--z-popover)] flex h-1.5 items-end justify-center overflow-hidden',
         'data-[state=visible]:animate-in data-[state=visible]:fade-in-0',
         'data-[state=hidden]:animate-out data-[state=hidden]:fade-out-0',
         className,

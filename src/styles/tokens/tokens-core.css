@@ -102,11 +102,10 @@
   --font-letter-spacing-tight: -0.02em;
   --font-letter-spacing-normal: 0em;
   --font-letter-spacing-wide: 0.02em;
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-overlay: 1030;
-  --z-modal: 1040;
-  --z-popover: 1050;
-  --z-tooltip: 1060;
-  --z-toast: 1070;
+  --z-sticky: 100;
+  --z-overlay: 1000;
+  --z-modal: 1100;
+  --z-popover: 1200;
+  --z-tooltip: 1300;
+  --z-toast: 1400;
 }
