@@ -1,0 +1,10 @@
+node_modules
+dist
+storybook-static
+*.local
+.DS_Store
+npm-debug.log*
+.vite
+*.tsbuildinfo
+# storybook-design-token addon cache (regenerated on `storybook dev`/`build-storybook`)
+public/design-tokens.source.json
