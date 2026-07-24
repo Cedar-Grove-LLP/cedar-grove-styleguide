@@ -52,10 +52,12 @@ Storybook is the operating manual.
 | Run the docs (Storybook) | `npm run storybook` |
 | Rebuild tokens after editing `tokens/**` | `npm run tokens:build` |
 | Typecheck / Lint | `npm run typecheck` / `npm run lint` |
+| Unit + a11y tests | `npm run test` |
 | **Full gate — run before you're done** | `npm run check` |
 | Build app / Storybook | `npm run build` / `npm run build-storybook` |
 
-`check` runs tokens:build → typecheck → lint → build-storybook.
+`check` runs tokens:build → typecheck → lint → test → build-storybook. CI runs the same gate on
+every PR, so CI and local never drift. Node version is pinned in `.nvmrc` / `engines` — match it.
 
 ## The token pipeline — the one rule that bites
 
@@ -79,7 +81,8 @@ variants via **`cva`** exported alongside the component (`export { Button, butto
 merge classes with **`cn()`** (`@/lib/utils`); type props as `React.ComponentProps<'el'> &
 VariantProps<…>`; **semantic tokens only** for color; disabled = `disabled:pointer-events-none
 disabled:opacity-50`; portalled overlays use `z-[var(--z-*)]`; **co-locate a `*.stories.tsx`**;
-named exports.
+named exports. For anything with real behavior worth pinning down, co-locate a `*.test.tsx`
+too — `src/components/ui/button.test.tsx` is the model (render + variant + axe smoke test).
 
 ## Guardrails
 
