@@ -5,6 +5,17 @@ on:
     branches: [main]
   pull_request:
 
+# Least privilege: this job only reads the repo — it never writes commits,
+# comments, or releases.
+permissions:
+  contents: read
+
+# A new push to the same branch supersedes the run in flight, so rapid pushes
+# don't queue up redundant full builds.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest

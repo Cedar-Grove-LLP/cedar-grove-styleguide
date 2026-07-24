@@ -45,6 +45,10 @@ describe('Button', () => {
     )
     // `region` is a page-level landmark rule, not a component concern — disable it so a
     // bare component tree doesn't report a false positive.
+    //
+    // Scope note: jsdom has no canvas, so axe cannot evaluate `color-contrast` here —
+    // this catches structural/ARIA problems, not contrast. Contrast is verified against
+    // the token values in docs/foundations/accessibility.mdx and in Storybook's a11y panel.
     const results = await axe(container, { rules: { region: { enabled: false } } })
     expect(results.violations.map((violation) => violation.id)).toEqual([])
   })
