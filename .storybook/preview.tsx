@@ -21,6 +21,7 @@ const preview: Preview = {
           'Brand & Content',
           [
             'Voice & Tone',
+            'Client Communication',
             'Writing Principles',
             'Grammar & Mechanics',
             'Terminology',
